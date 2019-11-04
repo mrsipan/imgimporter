@@ -155,7 +155,7 @@ def main():
     parser.add_argument('bucket_name', type=str, nargs=1, help='bucket name')
     settings = parser.parse_args()
 
-    import_image(**upload_file(settings.image_file, settings.bucket_name))))
+    import_image(*upload_file(settings.image_file, settings.bucket_name))))
 
 if __name__ == '__main__':
 

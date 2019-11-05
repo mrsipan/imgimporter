@@ -9,7 +9,7 @@ import logging
 import os
 import pathlib
 import sys
-
+import pytest
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
@@ -155,9 +155,10 @@ def main():
     parser.add_argument('bucket_name', type=str, nargs=1, help='bucket name')
     settings = parser.parse_args()
 
-    import_image(*upload_file(settings.image_file, settings.bucket_name))))
+    import_image(*upload_file(settings.image_file, settings.bucket_name))
+
 
 if __name__ == '__main__':
 
-    sys.exit(main())
+    pytest.main(['-s', __file__])
 

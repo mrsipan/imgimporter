@@ -8,8 +8,9 @@ import json
 import logging
 import os
 import pathlib
-import sys
 import pytest
+import sys
+import time
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
@@ -154,6 +155,8 @@ def import_image(bucket_name: str, object_name: str):
 
         while True:
 
+            time.sleep(60)
+
             rv = client.describe_import_image_tasks(
                 ImportTaskIds=[task_id]
                 )
@@ -177,11 +180,12 @@ def delete_object(bucket_name: str, object_name: str):
 
 def parse_args(args=None):
 
-    args = args if args is not None else sys.argv[:1]
+    args = args if args is not None else sys.argv[1:]
 
     parser = argparse.ArgumentParser(description='Import image as aws ami')
-    parser.add_argument('bucket_name', help='bucket name')
+    parser.add_argument('bucket_name', help='Bucket name')
     parser.add_argument('image_file', help='Image file')
+
     return parser.parse_args(args)
 
 
@@ -198,7 +202,7 @@ def main():
 
     clean(bucket_name, object_name)
 
-### Tests
+## Tests
 
 def test_create_bucket(mocker):
 

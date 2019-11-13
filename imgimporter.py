@@ -13,7 +13,7 @@ import sys
 import time
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__file__)
+logger = logging.getLogger(__name__)
 
 PYTEST = False
 
@@ -161,7 +161,10 @@ def import_image(bucket_name: str, object_name: str):
                 ImportTaskIds=[task_id]
                 )
 
-            logger.info(rv['ImportImageTasks'][0]['StatusMessage'])
+            try:
+                logger.info(rv['ImportImageTasks'][0]['StatusMessage'])
+            except KeyError:
+                pass
 
             if rv['ImportImageTasks'][0]['Status'] == 'completed' or PYTEST:
 
@@ -199,8 +202,7 @@ def main():
         )
 
     import_image(bucket_name, object_name)
-
-    clean(bucket_name, object_name)
+    delete_object(bucket_nae, object_name)
 
 ## Tests
 

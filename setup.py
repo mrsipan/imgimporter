@@ -14,6 +14,7 @@ setup(
     version='0.0.1',
     install_requires=[
         'boto3',
+        'pytest-mock',
         ],
     py_modules=['imgimporter'],
     package_dir={'': '.'},

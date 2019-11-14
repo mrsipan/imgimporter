@@ -155,21 +155,19 @@ def import_image(bucket_name: str, object_name: str):
 
         while True:
 
-            time.sleep(60)
+            if not PYTEST:
+                time.sleep(60)
 
             rv = client.describe_import_image_tasks(
                 ImportTaskIds=[task_id]
                 )
 
-            try:
-                logger.info(rv['ImportImageTasks'][0]['StatusMessage'])
-            except KeyError:
-                pass
-
             if rv['ImportImageTasks'][0]['Status'] == 'completed' or PYTEST:
-
                 logger.info('Task completed')
                 break
+            else:
+                logger.info(rv['ImportImageTasks'][0]['StatusMessage'])
+
 
 
 def delete_object(bucket_name: str, object_name: str):
@@ -202,7 +200,7 @@ def main():
         )
 
     import_image(bucket_name, object_name)
-    delete_object(bucket_nae, object_name)
+    delete_object(bucket_name, object_name)
 
 ## Tests
 
@@ -237,6 +235,7 @@ def test_parse_args(mocker):
 
     print(parse_args(args).bucket_name)
     print(parse_args(args).image_file)
+
 
 if __name__ == '__main__':
 

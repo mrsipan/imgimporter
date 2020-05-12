@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+import setuptools
 
 extras_require = {
     'test': ['mock', 'pytest']
@@ -9,7 +9,7 @@ entry_points = '''
 imgimporter = imgimporter:main
 '''
 
-setup(
+setuptools.setup(
     name='imgimporter',
     version='0.0.1',
     install_requires=[
@@ -24,4 +24,3 @@ setup(
     tests_require=extras_require['test'],
     entry_points=entry_points,
     )
-
